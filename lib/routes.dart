@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:thichxemphim/screens/home_screen/home_screen.dart';
 import 'package:thichxemphim/screens/main_screen/main_screen.dart';
 import 'package:thichxemphim/screens/splash/splash_screen.dart';
 
 class AppRoute {
   /// MARK: - Initials;
   static const String splashScreen = '/splash-screen';
+  static const String homeScreen = '/home-screen';
   static const String mainScreen = '/main-screen';
   //static const String detailCharacterScreen = '/detail-character-screen';
 
@@ -20,11 +22,11 @@ class AppRoute {
           builder: (_) => MainScreen.provider(),
           settings: settings,
         );
-      // case detailCharacterScreen:
-      //   return MaterialPageRoute(
-      //     builder: (_) => const DetailCharacterScreen(),
-      //     settings: settings,
-      //   );
+      case homeScreen:
+        return MaterialPageRoute(
+          builder: (_) => HomeScreen.provider(),
+          settings: settings,
+        );
       default:
         return _errorRoute();
     }

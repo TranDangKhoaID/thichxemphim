@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:thichxemphim/common/event_bus.dart';
 import 'package:thichxemphim/common/share_color.dart';
 import 'package:thichxemphim/common/share_style.dart';
+import 'package:thichxemphim/screens/home_screen/home_screen.dart';
 import 'package:thichxemphim/screens/main_screen/cubit/main_cubit.dart';
 
 class MainScreen extends StatefulWidget {
@@ -31,9 +32,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> with AfterLayoutMixin {
   /// MARK: - Initials;
   final screens = [
-    Container(
-      color: Colors.red,
-    ),
+    HomeScreen.provider(),
     Container(
       color: Colors.green,
     ),
@@ -83,17 +82,17 @@ class _MainScreenState extends State<MainScreen> with AfterLayoutMixin {
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(
-                Icons.person_4,
-                size: 20,
-              ),
-              label: 'Nhân vật',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
                 Icons.home_filled,
                 size: 20,
               ),
-              label: 'Anime/Manga',
+              label: 'Trang chủ',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.favorite,
+                size: 20,
+              ),
+              label: 'Đã lưu',
             ),
             BottomNavigationBarItem(
               icon: Icon(
