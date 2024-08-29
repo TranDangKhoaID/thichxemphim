@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:thichxemphim/common/configs.dart';
 import 'package:thichxemphim/models/response/movies_new_update_response.dart';
+import 'package:thichxemphim/models/response/movies_response.dart';
 import 'package:thichxemphim/network/rest_client.dart';
 
 @lazySingleton
@@ -44,5 +45,10 @@ class DataRepository implements RestClient {
     int? page,
   }) {
     return _client.getMoviesNewUpdate(slug: slug, page: page);
+  }
+
+  @override
+  Future<MoviesResponse> getMovies({required String slug, int? page}) {
+    return _client.getMovies(slug: slug, page: page);
   }
 }
