@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:thichxemphim/widgets/shimmer_grid_item.dart';
+import 'package:thichxemphim/widgets/shimmer_grid_item_home.dart';
 
 class ShimmerGridItems extends StatelessWidget {
   final String? text;

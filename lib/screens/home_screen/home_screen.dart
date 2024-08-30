@@ -11,7 +11,7 @@ import 'package:thichxemphim/screens/home_screen/controller/home_controller.dart
 import 'package:thichxemphim/screens/home_screen/widgets/shimmer_grid_items.dart';
 import 'package:thichxemphim/screens/movies_new_update_screen/movies_new_update_screen.dart';
 import 'package:thichxemphim/widgets/shimmer.dart';
-import 'package:thichxemphim/widgets/shimmer_grid_item.dart';
+import 'package:thichxemphim/widgets/shimmer_grid_item_home.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
