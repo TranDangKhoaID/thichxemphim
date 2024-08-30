@@ -54,6 +54,8 @@ dependencies:
   retrofit_generator: ^8.2.0
   supabase_flutter: ^2.6.0
   flutter_dotenv: ^5.1.0
+  pull_to_refresh: ^2.0.0
+  number_paginator: ^0.4.1
 
 dev_dependencies:
   flutter_test:

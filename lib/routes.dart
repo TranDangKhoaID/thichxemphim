@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:thichxemphim/screens/home_screen/home_screen.dart';
 import 'package:thichxemphim/screens/main_screen/main_screen.dart';
-import 'package:thichxemphim/screens/splash/splash_screen.dart';
+import 'package:thichxemphim/screens/movies_new_update_screen/movies_new_update_screen.dart';
+import 'package:thichxemphim/screens/splash_screen/splash_screen.dart';
 
 class AppRoute {
   /// MARK: - Initials;
   static const String splashScreen = '/splash-screen';
-  static const String homeScreen = '/home-screen';
+
   static const String mainScreen = '/main-screen';
+  static const String movieNUScreen = '/movie-new-update-screen';
   //static const String detailCharacterScreen = '/detail-character-screen';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -22,9 +24,10 @@ class AppRoute {
           builder: (_) => MainScreen.provider(),
           settings: settings,
         );
-      case homeScreen:
+
+      case movieNUScreen:
         return MaterialPageRoute(
-          builder: (_) => HomeScreen.provider(),
+          builder: (_) => MoviesNewUpdateScreen(),
           settings: settings,
         );
       default:

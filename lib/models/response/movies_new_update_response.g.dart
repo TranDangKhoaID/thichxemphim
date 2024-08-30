@@ -12,10 +12,14 @@ MoviesNewUpdateResponse _$MoviesNewUpdateResponseFromJson(
       items: (json['items'] as List<dynamic>?)
           ?.map((e) => Movie.fromJson(e as Map<String, dynamic>))
           .toList(),
+      pagination: json['pagination'] == null
+          ? null
+          : Pagination.fromJson(json['pagination'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$MoviesNewUpdateResponseToJson(
         MoviesNewUpdateResponse instance) =>
     <String, dynamic>{
       'items': instance.items,
+      'pagination': instance.pagination,
     };
