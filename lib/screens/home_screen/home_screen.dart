@@ -2,16 +2,14 @@ import 'dart:async';
 
 import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:get/get.dart';
 import 'package:thichxemphim/models/movie.dart';
-import 'package:thichxemphim/routes.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:thichxemphim/screens/home_screen/controller/home_controller.dart';
 import 'package:thichxemphim/screens/home_screen/widgets/shimmer_grid_items.dart';
 import 'package:thichxemphim/screens/movies_new_update_screen/movies_new_update_screen.dart';
+import 'package:thichxemphim/screens/movies_screen/movies_screen.dart';
 import 'package:thichxemphim/widgets/shimmer.dart';
-import 'package:thichxemphim/widgets/shimmer_grid_item_home.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -57,36 +55,62 @@ class _HomeScreenState extends State<HomeScreen> with AfterLayoutMixin {
             _buildNewUpdateMovies(),
             Divider(),
             Obx(
-              () => _buildMovies(
-                items: _controller.movies.value[1],
-                isLoading: _controller.isLoadings.value[1],
-                title: 'Phim lẻ',
+              () => Column(
+                children: [
+                  _buildMovies(
+                    items: _controller.movies.value[1],
+                    isLoading: _controller.isLoadings.value[1],
+                    title: 'Phim lẻ',
+                    onTap: () => Get.to(
+                      () => MoviesScreen(
+                        slug: 'phim-le',
+                        totalPages: _controller.totalPages.value[1],
+                        title: 'Phim lẻ',
+                      ),
+                    ),
+                  ),
+                  Divider(),
+                  _buildMovies(
+                    items: _controller.movies.value[2],
+                    isLoading: _controller.isLoadings.value[2],
+                    title: 'Phim bộ',
+                    onTap: () => Get.to(
+                      () => MoviesScreen(
+                        slug: 'phim-bo',
+                        totalPages: _controller.totalPages.value[2],
+                        title: 'Phim bộ',
+                      ),
+                    ),
+                  ),
+                  Divider(),
+                  _buildMovies(
+                    items: _controller.movies.value[3],
+                    isLoading: _controller.isLoadings.value[3],
+                    title: 'Hoạt hình',
+                    onTap: () => Get.to(
+                      () => MoviesScreen(
+                        slug: 'hoat-hinh',
+                        totalPages: _controller.totalPages.value[3],
+                        title: 'Hoạt hình',
+                      ),
+                    ),
+                  ),
+                  Divider(),
+                  _buildMovies(
+                    items: _controller.movies.value[4],
+                    isLoading: _controller.isLoadings.value[4],
+                    title: 'TV - Shows',
+                    onTap: () => Get.to(
+                      () => MoviesScreen(
+                        slug: 'tv-shows',
+                        totalPages: _controller.totalPages.value[4],
+                        title: 'TV Shows',
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ),
-            Divider(),
-            Obx(
-              () => _buildMovies(
-                items: _controller.movies.value[2],
-                isLoading: _controller.isLoadings.value[2],
-                title: 'Phim bộ',
-              ),
-            ),
-            Divider(),
-            Obx(
-              () => _buildMovies(
-                items: _controller.movies.value[3],
-                isLoading: _controller.isLoadings.value[3],
-                title: 'Hoạt hình',
-              ),
-            ),
-            Divider(),
-            Obx(
-              () => _buildMovies(
-                items: _controller.movies.value[4],
-                isLoading: _controller.isLoadings.value[4],
-                title: 'TV - Shows',
-              ),
-            ),
+            )
           ],
         ),
       ),
@@ -193,6 +217,7 @@ class _HomeScreenState extends State<HomeScreen> with AfterLayoutMixin {
     required List<Movie> items,
     required bool isLoading,
     required String title,
+    required void Function() onTap,
   }) {
     if (isLoading) {
       return ShimmerGridItems(
@@ -220,7 +245,7 @@ class _HomeScreenState extends State<HomeScreen> with AfterLayoutMixin {
               ),
               Spacer(),
               IconButton(
-                onPressed: () {},
+                onPressed: onTap,
                 icon: Icon(
                   Icons.arrow_forward_ios,
                 ),
@@ -239,7 +264,7 @@ class _HomeScreenState extends State<HomeScreen> with AfterLayoutMixin {
             final movie = items[index];
             return GestureDetector(
               onTap: () {
-                print('Hello');
+                print(_controller.totalPages.value[1]);
               },
               child: Container(
                 padding: EdgeInsets.all(5),

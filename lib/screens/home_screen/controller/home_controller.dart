@@ -60,9 +60,9 @@ class HomeController extends GetxController {
       updatedMovies[1] = response.data!.items ?? [];
       movies.value = updatedMovies;
 
-      // final updatedTotalPages = List<int>.from(totalPages.value);
-      // updatedTotalPages[0] = response.pagination?.totalPages ?? 0;
-      // totalPages.value = updatedTotalPages;
+      final updatedTotalPages = List<int>.from(totalPages.value);
+      updatedTotalPages[1] = response.data?.params?.pagination?.totalPages ?? 0;
+      totalPages.value = updatedTotalPages;
     } catch (e) {
       debugPrint('Get movie movies error $e');
     } finally {
@@ -88,9 +88,9 @@ class HomeController extends GetxController {
       updatedMovies[2] = response.data!.items ?? [];
       movies.value = updatedMovies;
 
-      // final updatedTotalPages = List<int>.from(totalPages.value);
-      // updatedTotalPages[0] = response.pagination?.totalPages ?? 0;
-      // totalPages.value = updatedTotalPages;
+      final updatedTotalPages = List<int>.from(totalPages.value);
+      updatedTotalPages[2] = response.data?.params?.pagination?.totalPages ?? 0;
+      totalPages.value = updatedTotalPages;
     } catch (e) {
       debugPrint('Get movie tv series error $e');
     } finally {
@@ -116,9 +116,9 @@ class HomeController extends GetxController {
       updatedMovies[3] = response.data!.items ?? [];
       movies.value = updatedMovies;
 
-      // final updatedTotalPages = List<int>.from(totalPages.value);
-      // updatedTotalPages[0] = response.pagination?.totalPages ?? 0;
-      // totalPages.value = updatedTotalPages;
+      final updatedTotalPages = List<int>.from(totalPages.value);
+      updatedTotalPages[3] = response.data?.params?.pagination?.totalPages ?? 0;
+      totalPages.value = updatedTotalPages;
     } catch (e) {
       debugPrint('Get movie cartoon error $e');
     } finally {
@@ -144,9 +144,9 @@ class HomeController extends GetxController {
       updatedMovies[4] = response.data!.items ?? [];
       movies.value = updatedMovies;
 
-      // final updatedTotalPages = List<int>.from(totalPages.value);
-      // updatedTotalPages[0] = response.pagination?.totalPages ?? 0;
-      // totalPages.value = updatedTotalPages;
+      final updatedTotalPages = List<int>.from(totalPages.value);
+      updatedTotalPages[4] = response.data?.params?.pagination?.totalPages ?? 0;
+      totalPages.value = updatedTotalPages;
     } catch (e) {
       debugPrint('Get movie tv shows error $e');
     } finally {

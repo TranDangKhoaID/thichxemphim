@@ -5,37 +5,44 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:number_paginator/number_paginator.dart';
+import 'package:thichxemphim/common/constants.dart';
 import 'package:thichxemphim/common/share_color.dart';
 import 'package:thichxemphim/extensions/string.dart';
-import 'package:thichxemphim/screens/movies_new_update_screen/controller/movies_nu_controller.dart';
 import 'package:thichxemphim/screens/movies_new_update_screen/widgets/shimmer_item.dart';
+import 'package:thichxemphim/screens/movies_screen/controller/movies_controller.dart';
 import 'package:thichxemphim/widgets/shimmer.dart';
 
-class MoviesNewUpdateScreen extends StatefulWidget {
+class MoviesScreen extends StatefulWidget {
+  final String slug;
   final int? totalPages;
-  const MoviesNewUpdateScreen({super.key, this.totalPages});
+  final String? title;
+  const MoviesScreen({
+    super.key,
+    required this.slug,
+    this.totalPages,
+    this.title,
+  });
 
   @override
-  State<MoviesNewUpdateScreen> createState() => _MoviesNewUpdateScreenState();
+  State<MoviesScreen> createState() => _MoviesScreenState();
 }
 
-class _MoviesNewUpdateScreenState extends State<MoviesNewUpdateScreen>
-    with AfterLayoutMixin {
+class _MoviesScreenState extends State<MoviesScreen> with AfterLayoutMixin {
   //
   int _page = 1;
-  final _controller = Get.put(MoviesNuController());
+  final _controller = Get.put(MoviesController());
   //
 
   @override
   FutureOr<void> afterFirstLayout(BuildContext context) {
-    _controller.getMovies(page: _page);
+    _controller.getMovies(page: _page, slug: widget.slug);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Phim mới cập nhật'),
+        title: Text(widget.title ?? ''),
       ),
       body: Column(
         children: [
@@ -46,7 +53,10 @@ class _MoviesNewUpdateScreenState extends State<MoviesNewUpdateScreen>
                 _page = index + 1;
               });
               _controller.movies.value.clear();
-              _controller.getMovies(page: _page);
+              _controller.getMovies(
+                page: _page,
+                slug: widget.slug,
+              );
             },
             config: NumberPaginatorUIConfig(
               buttonSelectedBackgroundColor: ShareColors.kPrimaryColor,
@@ -79,7 +89,8 @@ class _MoviesNewUpdateScreenState extends State<MoviesNewUpdateScreen>
                                 borderRadius: BorderRadius.circular(10),
                                 child: CachedNetworkImage(
                                   height: 200,
-                                  imageUrl: movie.poster_url ?? '',
+                                  imageUrl:
+                                      '${Constants.CND_IMAGE}/${movie.poster_url}',
                                   fit: BoxFit.cover,
                                   placeholder: (context, url) =>
                                       const ShimmerImage(),
