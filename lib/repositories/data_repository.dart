@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:thichxemphim/common/configs.dart';
+import 'package:thichxemphim/models/response/movie_detail_response.dart';
 import 'package:thichxemphim/models/response/movies_new_update_response.dart';
 import 'package:thichxemphim/models/response/movies_response.dart';
 import 'package:thichxemphim/network/rest_client.dart';
@@ -50,5 +51,10 @@ class DataRepository implements RestClient {
   @override
   Future<MoviesResponse> getMovies({required String slug, int? page}) {
     return _client.getMovies(slug: slug, page: page);
+  }
+
+  @override
+  Future<MovieDetailResponse> getMovieDetail({required String slug}) {
+    return _client.getMovieDetail(slug: slug);
   }
 }

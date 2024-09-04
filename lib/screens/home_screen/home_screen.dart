@@ -7,6 +7,7 @@ import 'package:thichxemphim/models/movie.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:thichxemphim/screens/home_screen/controller/home_controller.dart';
 import 'package:thichxemphim/screens/home_screen/widgets/shimmer_grid_items.dart';
+import 'package:thichxemphim/screens/movie_detail.dart/movie_detail_screen.dart';
 import 'package:thichxemphim/screens/movies_new_update_screen/movies_new_update_screen.dart';
 import 'package:thichxemphim/screens/movies_screen/movies_screen.dart';
 import 'package:thichxemphim/widgets/shimmer.dart';
@@ -171,9 +172,7 @@ class _HomeScreenState extends State<HomeScreen> with AfterLayoutMixin {
             itemBuilder: (context, index) {
               final movie = items[index];
               return GestureDetector(
-                onTap: () {
-                  print('Hello');
-                },
+                onTap: () => Get.to(() => MovieDetailScreen(slug: movie.slug!)),
                 child: Container(
                   padding: EdgeInsets.all(5),
                   child: Column(

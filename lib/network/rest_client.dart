@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 
 import 'package:retrofit/retrofit.dart';
+import 'package:thichxemphim/models/response/movie_detail_response.dart';
 import 'package:thichxemphim/models/response/movies_new_update_response.dart';
 import 'package:thichxemphim/models/response/movies_response.dart';
 
@@ -21,5 +22,10 @@ abstract class RestClient {
   Future<MoviesResponse> getMovies({
     @Path('slug') required String slug,
     @Path('page') int? page,
+  });
+
+  @GET('/phim/{slug}')
+  Future<MovieDetailResponse> getMovieDetail({
+    @Path('slug') required String slug,
   });
 }
