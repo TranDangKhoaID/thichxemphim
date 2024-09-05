@@ -5,8 +5,11 @@ import 'package:flick_video_player/flick_video_player.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
+import 'package:thichxemphim/boxes.dart';
 import 'package:thichxemphim/common/share_color.dart';
-import 'package:thichxemphim/models/episode.dart';
+import 'package:thichxemphim/locator.dart';
+import 'package:thichxemphim/models/movie_favorite.dart';
 import 'package:thichxemphim/screens/movie_detail.dart/controller/movie_detail_controller.dart';
 import 'package:thichxemphim/screens/movie_detail.dart/widgets/content_actor.dart';
 import 'package:thichxemphim/screens/movie_detail.dart/widgets/content_category.dart';
@@ -27,6 +30,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
     with AfterLayoutMixin {
   ///
   final _controller = Get.put(MovieDetailController());
+
   //
   late FlickManager flickManager;
   late String _videoURL;
@@ -136,14 +140,41 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
                         children: [
                           SizedBox(height: 10),
                           SizedBox(
-                            child: Text(
-                              _controller.movie.value?.name ?? '',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                              ),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
+                            child: Row(
+                              children: [
+                                Text(
+                                  _controller.movie.value?.name ?? '',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                Spacer(),
+                                GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      final movie = MovieFavorite(
+                                        name: _controller.movie.value!.name,
+                                        poster_url:
+                                            _controller.movie.value!.poster_url,
+                                        slug: widget.slug,
+                                      );
+                                      boxFavorites.put(
+                                        'key${widget.slug}',
+                                        movie,
+                                      );
+                                      print('Thành công');
+                                    });
+                                  },
+                                  child: Icon(
+                                    Icons.favorite_border,
+                                    color: Colors.red,
+                                    size: 30,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                           SizedBox(height: 5),

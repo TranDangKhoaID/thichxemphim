@@ -28,15 +28,17 @@ class ContentCategory extends StatelessWidget {
           alignment: WrapAlignment.center,
           children: List.generate(
             items.length,
-            (index) => Container(
-              padding: EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                color: ShareColors.kSecondColor,
-                borderRadius: BorderRadius.circular(10),
+            (index) => IntrinsicWidth(
+              child: Container(
+                padding: EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                  color: ShareColors.kSecondColor,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                alignment: Alignment.center,
+                //width: handleWidthCategory(items, context),
+                child: Text('#${items[index].name}'),
               ),
-              alignment: Alignment.center,
-              width: handleWidthCategory(items, context),
-              child: Text('#${items[index].name}'),
             ),
           ),
         )

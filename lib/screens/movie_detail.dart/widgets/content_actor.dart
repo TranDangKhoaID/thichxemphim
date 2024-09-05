@@ -27,7 +27,7 @@ class ContentActor extends StatelessWidget {
           children: List.generate(
             items.length,
             (index) => Container(
-              alignment: Alignment.topLeft,
+              alignment: Alignment.center,
               width: handleWidthActor(items, context),
               child: Text(
                 items[index],

@@ -7,8 +7,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:thichxemphim/common/event_bus.dart';
 import 'package:thichxemphim/common/share_color.dart';
 import 'package:thichxemphim/common/share_style.dart';
+import 'package:thichxemphim/screens/favorite_screen/favorite_screen.dart';
 import 'package:thichxemphim/screens/home_screen/home_screen.dart';
 import 'package:thichxemphim/screens/main_screen/cubit/main_cubit.dart';
+import 'package:thichxemphim/screens/setting_screen/setting_screen.dart';
 
 class MainScreen extends StatefulWidget {
   /// MARK: - Initials;
@@ -33,12 +35,8 @@ class _MainScreenState extends State<MainScreen> with AfterLayoutMixin {
   /// MARK: - Initials;
   final screens = [
     HomeScreen(),
-    Container(
-      color: Colors.green,
-    ),
-    Container(
-      color: Colors.blue,
-    )
+    FavoriteScreen(),
+    SettingScreen(),
   ];
 
   final GlobalKey<ScaffoldState> _globalKey = GlobalKey();

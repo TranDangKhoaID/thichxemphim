@@ -1,14 +1,11 @@
-import 'dart:ffi';
-
-import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:injectable/injectable.dart';
 
 import 'package:thichxemphim/locator.dart';
 import 'package:thichxemphim/models/episode.dart';
 import 'package:thichxemphim/models/movie_detail.dart';
 import 'package:thichxemphim/repositories/data_repository.dart';
-import 'package:video_player/video_player.dart';
 
 class MovieDetailController extends GetxController {
   /// MARK: - Initials;

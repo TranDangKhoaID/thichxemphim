@@ -16,15 +16,15 @@ class MovieDetail {
   String? content;
   String? type;
   String? status;
-  String? posterUrl;
-  String? thumbUrl;
-  bool? isCopyright;
-  bool? subDocquyen;
+  String? poster_url;
+  String? thum_url;
+  bool? is_copyright;
+  bool? sub_docquyen;
   bool? chieurap;
-  String? trailerUrl;
+  String? trailer_url;
   String? time;
-  String? episodeCurrent;
-  String? episodeTotal;
+  String? episode_current;
+  String? episode_total;
   String? quality;
   String? lang;
   String? notify;
@@ -46,15 +46,15 @@ class MovieDetail {
     this.content,
     this.type,
     this.status,
-    this.posterUrl,
-    this.thumbUrl,
-    this.isCopyright,
-    this.subDocquyen,
+    this.poster_url,
+    this.thum_url,
+    this.is_copyright,
+    this.sub_docquyen,
     this.chieurap,
-    this.trailerUrl,
+    this.trailer_url,
     this.time,
-    this.episodeCurrent,
-    this.episodeTotal,
+    this.episode_current,
+    this.episode_total,
     this.quality,
     this.lang,
     this.notify,

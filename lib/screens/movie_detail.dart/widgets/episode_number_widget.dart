@@ -72,7 +72,7 @@ class _EpisodeNumberWidgetState extends State<EpisodeNumberWidget> {
             child: Container(
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(5),
                 color: indexSelected == index
                     ? ShareColors.kPrimaryColor
                     : Colors.grey,
