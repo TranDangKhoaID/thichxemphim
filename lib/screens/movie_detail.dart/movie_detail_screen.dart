@@ -41,6 +41,8 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
   List<String> beginningOfContent = [];
   String summaryContent = '';
   //
+
+  //
   void splitContent() {
     // làm chức năng chia nhỏ content để hiện 1 phần
     items = _controller.movie.value!.content!.split(' ');
@@ -53,6 +55,28 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
       summaryContent = beginningOfContent.join(' ');
       summaryContent = '$summaryContent ...';
     }
+  }
+
+  void toggleFavorite({
+    required bool isFavorite,
+  }) {
+    final movie = MovieFavorite(
+      name: _controller.movie.value!.name,
+      poster_url: _controller.movie.value!.poster_url,
+      slug: widget.slug,
+    );
+    setState(() {
+      if (isFavorite) {
+        boxFavorites.delete(
+          'key${widget.slug}',
+        );
+      } else {
+        boxFavorites.put(
+          'key${widget.slug}',
+          movie,
+        );
+      }
+    });
   }
 
   @override
@@ -78,6 +102,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
+    final isFavorite = boxFavorites.get('key${widget.slug}') != null;
     return Scaffold(
       //appBar: AppBar(),
       body: SafeArea(
@@ -154,25 +179,19 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
                                 Spacer(),
                                 GestureDetector(
                                   onTap: () {
-                                    setState(() {
-                                      final movie = MovieFavorite(
-                                        name: _controller.movie.value!.name,
-                                        poster_url:
-                                            _controller.movie.value!.poster_url,
-                                        slug: widget.slug,
-                                      );
-                                      boxFavorites.put(
-                                        'key${widget.slug}',
-                                        movie,
-                                      );
-                                      print('Thành công');
-                                    });
+                                    toggleFavorite(isFavorite: isFavorite);
                                   },
-                                  child: Icon(
-                                    Icons.favorite_border,
-                                    color: Colors.red,
-                                    size: 30,
-                                  ),
+                                  child: isFavorite
+                                      ? Icon(
+                                          Icons.favorite,
+                                          color: Colors.red,
+                                          size: 30,
+                                        )
+                                      : Icon(
+                                          Icons.favorite_border,
+                                          color: Colors.red,
+                                          size: 30,
+                                        ),
                                 ),
                               ],
                             ),

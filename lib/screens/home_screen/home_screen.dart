@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:thichxemphim/models/movie.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -122,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen> with AfterLayoutMixin {
     return Obx(() {
       final items = _controller.movies.value[0];
       if (_controller.isLoadings.value[0]) {
-        return ShimmerGridItems(
+        return ShimmerListItems(
           text: 'Phim mới cập nhật',
         );
       }
@@ -162,49 +163,51 @@ class _HomeScreenState extends State<HomeScreen> with AfterLayoutMixin {
               ],
             ),
           ),
-          GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              childAspectRatio: 0.56,
-            ),
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              final movie = items[index];
-              return GestureDetector(
-                onTap: () => Get.to(() => MovieDetailScreen(slug: movie.slug!)),
-                child: Container(
-                  padding: EdgeInsets.all(5),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: CachedNetworkImage(
-                          height: 160,
-                          imageUrl: movie.poster_url ?? '',
-                          fit: BoxFit.cover,
-                          placeholder: (context, url) => const ShimmerImage(),
-                          errorWidget: (context, url, error) => Icon(
-                            Icons.error,
+          SizedBox(
+            height: 220,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index) {
+                final movie = items[index];
+                return GestureDetector(
+                  onTap: () => Get.to(
+                    () => MovieDetailScreen(slug: movie.slug!),
+                  ),
+                  child: Container(
+                    width: 120,
+                    padding: EdgeInsets.all(5),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: CachedNetworkImage(
+                            width: 120,
+                            height: 160,
+                            imageUrl: movie.poster_url ?? '',
+                            fit: BoxFit.cover,
+                            placeholder: (context, url) => const ShimmerImage(),
+                            errorWidget: (context, url, error) => Icon(
+                              Icons.error,
+                            ),
                           ),
                         ),
-                      ),
-                      Text(
-                        movie.name ?? '',
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w600,
+                        Text(
+                          movie.name ?? '',
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              );
-            },
-            itemCount: 6,
+                );
+              },
+              itemCount: items.length,
+            ),
           ),
         ],
       );

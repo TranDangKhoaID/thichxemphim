@@ -34,6 +34,41 @@ class ShimmerGridItem extends StatelessWidget {
   }
 }
 
+class ShimmerListItem extends StatelessWidget {
+  const ShimmerListItem({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey[300]!,
+      highlightColor: Colors.grey[100]!,
+      child: Container(
+        width: 120,
+        padding: EdgeInsets.all(5),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Shimmer.fromColors(
+              baseColor: Colors.grey[300]!,
+              highlightColor: Colors.grey[100]!,
+              child: Container(
+                width: 120,
+                height: 160,
+                decoration: BoxDecoration(
+                  color: Colors.grey[300],
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ),
+            //SizedBox(height: 8),
+            ShimmerText(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class ShimmerText extends StatelessWidget {
   const ShimmerText({super.key});
 
