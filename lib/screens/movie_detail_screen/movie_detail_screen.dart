@@ -10,11 +10,11 @@ import 'package:thichxemphim/boxes.dart';
 import 'package:thichxemphim/common/share_color.dart';
 import 'package:thichxemphim/locator.dart';
 import 'package:thichxemphim/models/movie_favorite.dart';
-import 'package:thichxemphim/screens/movie_detail.dart/controller/movie_detail_controller.dart';
-import 'package:thichxemphim/screens/movie_detail.dart/widgets/content_actor.dart';
-import 'package:thichxemphim/screens/movie_detail.dart/widgets/content_category.dart';
-import 'package:thichxemphim/screens/movie_detail.dart/widgets/episode_number_widget.dart';
-import 'package:thichxemphim/screens/movie_detail.dart/widgets/title_and_content.dart';
+import 'package:thichxemphim/screens/movie_detail_screen/controller/movie_detail_controller.dart';
+import 'package:thichxemphim/screens/movie_detail_screen/widgets/content_actor.dart';
+import 'package:thichxemphim/screens/movie_detail_screen/widgets/content_category.dart';
+import 'package:thichxemphim/screens/movie_detail_screen/widgets/episode_number_widget.dart';
+import 'package:thichxemphim/screens/movie_detail_screen/widgets/title_and_content.dart';
 import 'package:thichxemphim/widgets/loading_widget.dart';
 import 'package:video_player/video_player.dart';
 

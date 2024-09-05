@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:thichxemphim/boxes.dart';
 import 'package:thichxemphim/models/movie_favorite.dart';
-import 'package:thichxemphim/screens/movie_detail.dart/movie_detail_screen.dart';
+import 'package:thichxemphim/screens/movie_detail_screen/movie_detail_screen.dart';
 import 'package:thichxemphim/widgets/shimmer.dart';
 
 class FavoriteScreen extends StatefulWidget {

@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:number_paginator/number_paginator.dart';
 import 'package:thichxemphim/common/share_color.dart';
 import 'package:thichxemphim/extensions/string.dart';
+import 'package:thichxemphim/screens/movie_detail_screen/movie_detail_screen.dart';
 import 'package:thichxemphim/screens/movies_new_update_screen/controller/movies_nu_controller.dart';
 import 'package:thichxemphim/screens/movies_new_update_screen/widgets/shimmer_item.dart';
 import 'package:thichxemphim/widgets/shimmer.dart';
@@ -66,66 +67,71 @@ class _MoviesNewUpdateScreenState extends State<MoviesNewUpdateScreen>
                   child: ListView.builder(
                     itemBuilder: (context, index) {
                       final movie = _controller.movies.value[index];
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 5,
+                      return GestureDetector(
+                        onTap: () => Get.to(
+                          () => MovieDetailScreen(slug: movie.slug!),
                         ),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              flex: 1,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: CachedNetworkImage(
-                                  height: 200,
-                                  imageUrl: movie.poster_url ?? '',
-                                  fit: BoxFit.cover,
-                                  placeholder: (context, url) =>
-                                      const ShimmerImage(),
-                                  errorWidget: (context, url, error) => Icon(
-                                    Icons.error,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 5,
+                          ),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                flex: 1,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: CachedNetworkImage(
+                                    height: 200,
+                                    imageUrl: movie.poster_url ?? '',
+                                    fit: BoxFit.cover,
+                                    placeholder: (context, url) =>
+                                        const ShimmerImage(),
+                                    errorWidget: (context, url, error) => Icon(
+                                      Icons.error,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            SizedBox(width: 10),
-                            Expanded(
-                              flex: 1,
-                              child: Column(
-                                //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    movie.name ?? '',
-                                    overflow: TextOverflow.clip,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
+                              SizedBox(width: 10),
+                              Expanded(
+                                flex: 1,
+                                child: Column(
+                                  //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      movie.name ?? '',
+                                      overflow: TextOverflow.clip,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(height: 20),
-                                  Text(
-                                    'Cập nhật lúc: ${formattedStringDateTime(movie.modified!.time ?? '')}',
-                                    overflow: TextOverflow.clip,
-                                    style: TextStyle(
-                                      color: Colors.grey,
-                                      fontWeight: FontWeight.bold,
-                                      fontStyle: FontStyle.italic,
+                                    SizedBox(height: 20),
+                                    Text(
+                                      'Cập nhật lúc: ${formattedStringDateTime(movie.modified!.time ?? '')}',
+                                      overflow: TextOverflow.clip,
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                        fontWeight: FontWeight.bold,
+                                        fontStyle: FontStyle.italic,
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(height: 20),
-                                  Text(
-                                    'Năm: ${movie.year}',
-                                    style: TextStyle(
-                                      color: Colors.grey,
-                                      fontWeight: FontWeight.bold,
-                                      fontStyle: FontStyle.italic,
+                                    SizedBox(height: 20),
+                                    Text(
+                                      'Năm: ${movie.year}',
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                        fontWeight: FontWeight.bold,
+                                        fontStyle: FontStyle.italic,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       );
                     },

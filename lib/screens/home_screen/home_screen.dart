@@ -7,7 +7,7 @@ import 'package:thichxemphim/models/movie.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:thichxemphim/screens/home_screen/controller/home_controller.dart';
 import 'package:thichxemphim/screens/home_screen/widgets/shimmer_grid_items.dart';
-import 'package:thichxemphim/screens/movie_detail.dart/movie_detail_screen.dart';
+import 'package:thichxemphim/screens/movie_detail_screen/movie_detail_screen.dart';
 import 'package:thichxemphim/screens/movies_new_update_screen/movies_new_update_screen.dart';
 import 'package:thichxemphim/screens/movies_screen/movies_screen.dart';
 import 'package:thichxemphim/widgets/shimmer.dart';
@@ -267,33 +267,38 @@ class _HomeScreenState extends State<HomeScreen> with AfterLayoutMixin {
               onTap: () {
                 print(_controller.totalPages.value[1]);
               },
-              child: Container(
-                padding: EdgeInsets.all(5),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: CachedNetworkImage(
-                        height: 160,
-                        imageUrl: 'https://phimimg.com/${movie.poster_url}',
-                        fit: BoxFit.cover,
-                        placeholder: (context, url) => const ShimmerImage(),
-                        errorWidget: (context, url, error) => Icon(
-                          Icons.error,
+              child: GestureDetector(
+                onTap: () => Get.to(
+                  () => MovieDetailScreen(slug: movie.slug!),
+                ),
+                child: Container(
+                  padding: EdgeInsets.all(5),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: CachedNetworkImage(
+                          height: 160,
+                          imageUrl: 'https://phimimg.com/${movie.poster_url}',
+                          fit: BoxFit.cover,
+                          placeholder: (context, url) => const ShimmerImage(),
+                          errorWidget: (context, url, error) => Icon(
+                            Icons.error,
+                          ),
                         ),
                       ),
-                    ),
-                    Text(
-                      movie.name ?? '',
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w600,
+                      Text(
+                        movie.name ?? '',
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             );
