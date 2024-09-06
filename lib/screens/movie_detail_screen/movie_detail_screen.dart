@@ -5,6 +5,7 @@ import 'package:flick_video_player/flick_video_player.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:like_button/like_button.dart';
 import 'package:thichxemphim/boxes.dart';
 import 'package:thichxemphim/common/share_color.dart';
 import 'package:thichxemphim/models/movie_favorite.dart';
@@ -55,26 +56,24 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
     }
   }
 
-  void toggleFavorite({
-    required bool isFavorite,
-  }) {
+  Future<bool?> toggleFavorite({required bool isFavorite}) async {
+    //
     final movie = MovieFavorite(
       name: _controller.movie.value!.name,
       poster_url: _controller.movie.value!.poster_url,
       slug: widget.slug,
     );
+
     setState(() {
       if (isFavorite) {
-        boxFavorites.delete(
-          'key${widget.slug}',
-        );
+        boxFavorites.delete('key${widget.slug}');
       } else {
-        boxFavorites.put(
-          'key${widget.slug}',
-          movie,
-        );
+        boxFavorites.put('key${widget.slug}', movie);
       }
     });
+
+    // Trả về giá trị boolean mới
+    return !isFavorite;
   }
 
   @override
@@ -175,21 +174,21 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
                                   overflow: TextOverflow.ellipsis,
                                 ),
                                 Spacer(),
-                                GestureDetector(
-                                  onTap: () {
-                                    toggleFavorite(isFavorite: isFavorite);
+                                LikeButton(
+                                  isLiked: isFavorite,
+                                  size: 30,
+                                  onTap: (isLiked) => toggleFavorite(
+                                    isFavorite: isLiked,
+                                  ),
+                                  likeBuilder: (bool isLiked) {
+                                    return Icon(
+                                      isLiked
+                                          ? Icons.favorite
+                                          : Icons.favorite_border,
+                                      color: isLiked ? Colors.red : Colors.grey,
+                                      size: 30,
+                                    );
                                   },
-                                  child: isFavorite
-                                      ? Icon(
-                                          Icons.favorite,
-                                          color: Colors.red,
-                                          size: 30,
-                                        )
-                                      : Icon(
-                                          Icons.favorite_border,
-                                          color: Colors.red,
-                                          size: 30,
-                                        ),
                                 ),
                               ],
                             ),

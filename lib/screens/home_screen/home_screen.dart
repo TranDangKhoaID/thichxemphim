@@ -38,13 +38,6 @@ class _HomeScreenState extends State<HomeScreen> with AfterLayoutMixin {
   final GlobalKey<ScaffoldState> _globalKey = GlobalKey();
   //
   bool _isSearching = false;
-  //final TextEditingController _searchController = TextEditingController();
-  final List<String> _suggestions = [
-    'Movie 1',
-    'Movie 2',
-    'Movie 3',
-    'Movie 4',
-  ];
 
   @override
   Widget build(BuildContext context) {
