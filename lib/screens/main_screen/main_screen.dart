@@ -4,6 +4,7 @@ import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:thichxemphim/common/event_bus.dart';
 import 'package:thichxemphim/common/share_color.dart';
 import 'package:thichxemphim/common/share_style.dart';
@@ -77,27 +78,39 @@ class _MainScreenState extends State<MainScreen> with AfterLayoutMixin {
       builder: (context, state) {
         final tabIndex = state.data.tabIndex;
         return BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
+          items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(
-                Icons.home_filled,
-                size: 20,
+              icon: SvgPicture.asset(
+                'assets/icons/home.svg',
+                color: Colors.grey,
               ),
               label: 'Trang chủ',
+              activeIcon: SvgPicture.asset(
+                'assets/icons/home.svg',
+                color: ShareColors.kPrimaryColor,
+              ),
             ),
             BottomNavigationBarItem(
-              icon: Icon(
-                Icons.favorite,
-                size: 20,
+              icon: SvgPicture.asset(
+                'assets/icons/heart.svg',
+                color: Colors.grey,
               ),
               label: 'Đã lưu',
+              activeIcon: SvgPicture.asset(
+                'assets/icons/heart.svg',
+                color: ShareColors.kPrimaryColor,
+              ),
             ),
             BottomNavigationBarItem(
-              icon: Icon(
-                Icons.settings,
-                size: 20,
+              icon: SvgPicture.asset(
+                'assets/icons/setting.svg',
+                color: Colors.grey,
               ),
               label: 'Cài đặt',
+              activeIcon: SvgPicture.asset(
+                'assets/icons/setting.svg',
+                color: ShareColors.kPrimaryColor,
+              ),
             ),
           ],
           currentIndex: tabIndex,

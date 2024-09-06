@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ShareColors {
-  static Color kPrimaryColor = const Color(0xffd67d2f);
+  //static Color kPrimaryColor = const Color(0xffd67d2f);
+  static Color kPrimaryColor = Colors.pink;
   static Color kColorRuby = Colors.red;
   static Color kColorCoin = Colors.yellow;
   static const Color kSecondColor = Color(0xffe68c78);
