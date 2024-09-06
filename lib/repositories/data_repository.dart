@@ -5,6 +5,7 @@ import 'package:thichxemphim/common/configs.dart';
 import 'package:thichxemphim/models/response/movie_detail_response.dart';
 import 'package:thichxemphim/models/response/movies_new_update_response.dart';
 import 'package:thichxemphim/models/response/movies_response.dart';
+import 'package:thichxemphim/models/response/search_movie_response.dart';
 import 'package:thichxemphim/network/rest_client.dart';
 
 @lazySingleton
@@ -56,5 +57,10 @@ class DataRepository implements RestClient {
   @override
   Future<MovieDetailResponse> getMovieDetail({required String slug}) {
     return _client.getMovieDetail(slug: slug);
+  }
+
+  @override
+  Future<SearchMovieResponse> searchMovies({required String name}) {
+    return _client.searchMovies(name: name);
   }
 }

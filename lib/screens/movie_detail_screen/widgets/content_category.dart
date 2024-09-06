@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:thichxemphim/common/share_color.dart';
+
 import 'package:thichxemphim/models/category.dart';
 import 'package:thichxemphim/widgets/wrap_category_movie.dart';
 

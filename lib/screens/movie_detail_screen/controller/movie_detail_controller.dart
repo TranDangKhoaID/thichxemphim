@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:injectable/injectable.dart';
-
 import 'package:thichxemphim/locator.dart';
 import 'package:thichxemphim/models/episode.dart';
 import 'package:thichxemphim/models/movie_detail.dart';

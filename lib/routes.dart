@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:thichxemphim/screens/home_screen/home_screen.dart';
 import 'package:thichxemphim/screens/main_screen/main_screen.dart';
 import 'package:thichxemphim/screens/movies_new_update_screen/movies_new_update_screen.dart';
 import 'package:thichxemphim/screens/splash_screen/splash_screen.dart';

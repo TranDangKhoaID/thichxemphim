@@ -4,6 +4,7 @@ import 'package:retrofit/retrofit.dart';
 import 'package:thichxemphim/models/response/movie_detail_response.dart';
 import 'package:thichxemphim/models/response/movies_new_update_response.dart';
 import 'package:thichxemphim/models/response/movies_response.dart';
+import 'package:thichxemphim/models/response/search_movie_response.dart';
 
 part 'rest_client.g.dart';
 
@@ -27,5 +28,10 @@ abstract class RestClient {
   @GET('/phim/{slug}')
   Future<MovieDetailResponse> getMovieDetail({
     @Path('slug') required String slug,
+  });
+
+  @GET('/v1/api/tim-kiem?keyword={name}&limit=5')
+  Future<SearchMovieResponse> searchMovies({
+    @Path('name') required String name,
   });
 }

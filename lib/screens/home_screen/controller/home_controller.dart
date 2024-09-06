@@ -18,6 +18,19 @@ class HomeController extends GetxController {
     false,
   ]);
   //
+  Future<List<Movie>> searchMovies({
+    required String name,
+  }) async {
+    try {
+      final response = await dataRepository.searchMovies(name: name);
+      return response.data!.items ?? [];
+    } catch (e) {
+      debugPrint('Get search movies error $e');
+      return [];
+    }
+  }
+
+  //
   Future<void> getNewUpdateMovies() async {
     try {
       final updatedLoadings = List<bool>.from(isLoadings.value);

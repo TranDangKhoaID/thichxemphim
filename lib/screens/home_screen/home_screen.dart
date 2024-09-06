@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get/get.dart';
+import 'package:thichxemphim/common/constants.dart';
 import 'package:thichxemphim/models/movie.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:thichxemphim/screens/home_screen/controller/home_controller.dart';
@@ -10,6 +12,7 @@ import 'package:thichxemphim/screens/home_screen/widgets/shimmer_grid_items.dart
 import 'package:thichxemphim/screens/movie_detail_screen/movie_detail_screen.dart';
 import 'package:thichxemphim/screens/movies_new_update_screen/movies_new_update_screen.dart';
 import 'package:thichxemphim/screens/movies_screen/movies_screen.dart';
+import 'package:thichxemphim/widgets/loading_widget.dart';
 import 'package:thichxemphim/widgets/shimmer.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -20,7 +23,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with AfterLayoutMixin {
-  //
+  /// MARK: - Initials;
   final _controller = Get.put(HomeController());
   @override
   FutureOr<void> afterFirstLayout(BuildContext context) {
@@ -32,14 +35,95 @@ class _HomeScreenState extends State<HomeScreen> with AfterLayoutMixin {
       ..getMovieTVShows();
   }
 
-  /// MARK: - Initials;
   final GlobalKey<ScaffoldState> _globalKey = GlobalKey();
+  //
+  bool _isSearching = false;
+  //final TextEditingController _searchController = TextEditingController();
+  final List<String> _suggestions = [
+    'Movie 1',
+    'Movie 2',
+    'Movie 3',
+    'Movie 4',
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _globalKey,
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: !_isSearching
+            ? Row(
+                children: const [
+                  SizedBox(height: 10),
+                  Text(
+                    'Xem Phim Vietsub',
+                  ),
+                ],
+              )
+            : TypeAheadField<Movie>(
+                suggestionsCallback: (search) async {
+                  return await _controller.searchMovies(name: search);
+                },
+                loadingBuilder: (context) => LoadingWidget(),
+                //emptyBuilder: (context) => Text('Hãy nhập tên phim đúng'),
+                builder: (context, controller, focusNode) {
+                  return TextField(
+                    controller: controller,
+                    autofocus: true,
+                    focusNode: focusNode,
+                    decoration: const InputDecoration(
+                      hintText: 'Nhập tên phim...',
+                      border: InputBorder.none,
+                    ),
+                    style: TextStyle(color: Colors.black),
+                  );
+                },
+                itemBuilder: (context, movie) {
+                  return ListTile(
+                    leading: ClipRRect(
+                      borderRadius: BorderRadius.circular(5),
+                      child: CachedNetworkImage(
+                        width: 80,
+                        //height: 80,
+                        imageUrl: '${Constants.CND_IMAGE}/${movie.poster_url}',
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) => const ShimmerImage(),
+                        errorWidget: (context, url, error) => Icon(
+                          Icons.error,
+                        ),
+                      ),
+                    ),
+                    title: Text(
+                      '${movie.name}',
+                      style: TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
+                    subtitle: Text(movie.episode_current ?? ''),
+                  );
+                },
+                onSelected: (movie) => Get.to(
+                  () => MovieDetailScreen(slug: movie.slug!),
+                ),
+              ),
+        elevation: 0,
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        actions: [
+          IconButton(
+            onPressed: () {
+              setState(() {
+                _isSearching = !_isSearching;
+                // if (!_isSearching) {
+                //   _searchController.clear();
+                // }
+              });
+            },
+            icon: Icon(
+              _isSearching ? Icons.close : Icons.search,
+            ),
+          ),
+        ],
+      ),
       body: _buildBody(),
     );
   }
