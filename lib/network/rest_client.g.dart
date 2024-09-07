@@ -141,7 +141,7 @@ class _RestClient implements RestClient {
     )
         .compose(
           _dio.options,
-          '/v1/api/tim-kiem?keyword=${name}&limit=5',
+          '/v1/api/tim-kiem?keyword=${name}&limit=10',
           queryParameters: queryParameters,
           data: _data,
         )

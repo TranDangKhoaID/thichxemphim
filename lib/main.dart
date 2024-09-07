@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:thichxemphim/boxes.dart';
 import 'package:thichxemphim/locator.dart';
-import 'package:thichxemphim/models/movie_favorite.dart';
+import 'package:thichxemphim/models/hive_local/movie_favorite.dart';
 import 'package:thichxemphim/my_app.dart';
 
 void main() async {

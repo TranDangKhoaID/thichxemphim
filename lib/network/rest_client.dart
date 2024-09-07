@@ -30,7 +30,7 @@ abstract class RestClient {
     @Path('slug') required String slug,
   });
 
-  @GET('/v1/api/tim-kiem?keyword={name}&limit=5')
+  @GET('/v1/api/tim-kiem?keyword={name}&limit=10')
   Future<SearchMovieResponse> searchMovies({
     @Path('name') required String name,
   });

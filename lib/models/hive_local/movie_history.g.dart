@@ -1,38 +1,41 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'movie_favorite.dart';
+part of 'movie_history.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class MovieFavoriteAdapter extends TypeAdapter<MovieFavorite> {
+class MovieHistoryAdapter extends TypeAdapter<MovieHistory> {
   @override
-  final int typeId = 0;
+  final int typeId = 1;
 
   @override
-  MovieFavorite read(BinaryReader reader) {
+  MovieHistory read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return MovieFavorite(
+    return MovieHistory(
       name: fields[0] as String?,
       slug: fields[1] as String?,
       poster_url: fields[2] as String?,
+      indexSelected: fields[3] as int?,
     );
   }
 
   @override
-  void write(BinaryWriter writer, MovieFavorite obj) {
+  void write(BinaryWriter writer, MovieHistory obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
       ..write(obj.slug)
       ..writeByte(2)
-      ..write(obj.poster_url);
+      ..write(obj.poster_url)
+      ..writeByte(3)
+      ..write(obj.indexSelected);
   }
 
   @override
@@ -41,7 +44,7 @@ class MovieFavoriteAdapter extends TypeAdapter<MovieFavorite> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is MovieFavoriteAdapter &&
+      other is MovieHistoryAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

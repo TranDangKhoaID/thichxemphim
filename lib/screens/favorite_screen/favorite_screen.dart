@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:thichxemphim/boxes.dart';
-import 'package:thichxemphim/models/movie_favorite.dart';
+import 'package:thichxemphim/models/hive_local/movie_favorite.dart';
 import 'package:thichxemphim/screens/movie_detail_screen/movie_detail_screen.dart';
 import 'package:thichxemphim/widgets/shimmer.dart';
 
@@ -43,7 +43,10 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
               final MovieFavorite movie = boxFavorites.getAt(index);
               return GestureDetector(
                 onTap: () => Get.to(
-                  () => MovieDetailScreen(slug: movie.slug!),
+                  () => MovieDetailScreen(
+                    slug: movie.slug!,
+                    indexSelected: movie.indexSelected,
+                  ),
                 ),
                 child: Container(
                   padding: EdgeInsets.all(5),
@@ -56,10 +59,19 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                       ),
                       Text(
                         movie.name ?? '',
-                        maxLines: 2,
+                        maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Text(
+                        'Tập ${movie.indexSelected! + 1}',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 12,
                           fontWeight: FontWeight.w600,
                         ),
                       ),

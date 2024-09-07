@@ -78,7 +78,9 @@ class _EpisodeNumberWidgetState extends State<EpisodeNumberWidget> {
                     : Colors.grey,
               ),
               child: Text(
-                '${index + 1}',
+                (widget.items[index]!.name ?? '')
+                    .replaceFirst('Tập', '')
+                    .trim(),
                 style: TextStyle(
                   color: indexSelected == index ? Colors.white : Colors.black,
                 ),

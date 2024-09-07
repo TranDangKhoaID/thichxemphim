@@ -43,81 +43,85 @@ class _HomeScreenState extends State<HomeScreen> with AfterLayoutMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _globalKey,
-      appBar: AppBar(
-        title: !_isSearching
-            ? Row(
-                children: const [
-                  SizedBox(height: 10),
-                  Text(
-                    'Xem Phim Vietsub',
-                  ),
-                ],
-              )
-            : TypeAheadField<Movie>(
-                suggestionsCallback: (search) async {
-                  return await _controller.searchMovies(name: search);
-                },
-                loadingBuilder: (context) => LoadingWidget(),
-                //emptyBuilder: (context) => Text('Hãy nhập tên phim đúng'),
-                builder: (context, controller, focusNode) {
-                  return TextField(
-                    controller: controller,
-                    autofocus: true,
-                    focusNode: focusNode,
-                    decoration: const InputDecoration(
-                      hintText: 'Nhập tên phim...',
-                      border: InputBorder.none,
-                    ),
-                    style: TextStyle(color: Colors.black),
-                  );
-                },
-                itemBuilder: (context, movie) {
-                  return ListTile(
-                    leading: ClipRRect(
-                      borderRadius: BorderRadius.circular(5),
-                      child: CachedNetworkImage(
-                        width: 80,
-                        //height: 80,
-                        imageUrl: '${Constants.CND_IMAGE}/${movie.poster_url}',
-                        fit: BoxFit.cover,
-                        placeholder: (context, url) => const ShimmerImage(),
-                        errorWidget: (context, url, error) => Icon(
-                          Icons.error,
-                        ),
-                      ),
-                    ),
-                    title: Text(
-                      '${movie.name}',
-                      style: TextStyle(
-                        fontSize: 14,
-                      ),
-                    ),
-                    subtitle: Text(movie.episode_current ?? ''),
-                  );
-                },
-                onSelected: (movie) => Get.to(
-                  () => MovieDetailScreen(slug: movie.slug!),
-                ),
-              ),
-        elevation: 0,
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        actions: [
-          IconButton(
-            onPressed: () {
-              setState(() {
-                _isSearching = !_isSearching;
-                // if (!_isSearching) {
-                //   _searchController.clear();
-                // }
-              });
-            },
-            icon: Icon(
-              _isSearching ? Icons.close : Icons.search,
-            ),
-          ),
-        ],
-      ),
+      appBar: _buildAppbar(context),
       body: _buildBody(),
+    );
+  }
+
+  AppBar _buildAppbar(BuildContext context) {
+    return AppBar(
+      title: !_isSearching
+          ? Row(
+              children: const [
+                SizedBox(height: 10),
+                Text(
+                  'Xem Phim Vietsub',
+                ),
+              ],
+            )
+          : TypeAheadField<Movie>(
+              suggestionsCallback: (search) async {
+                return await _controller.searchMovies(name: search);
+              },
+              loadingBuilder: (context) => LoadingWidget(),
+              //emptyBuilder: (context) => Text('Hãy nhập tên phim đúng'),
+              builder: (context, controller, focusNode) {
+                return TextField(
+                  controller: controller,
+                  autofocus: true,
+                  focusNode: focusNode,
+                  decoration: const InputDecoration(
+                    hintText: 'Nhập tên phim...',
+                    border: InputBorder.none,
+                  ),
+                  style: TextStyle(color: Colors.black),
+                );
+              },
+              itemBuilder: (context, movie) {
+                return ListTile(
+                  leading: ClipRRect(
+                    borderRadius: BorderRadius.circular(5),
+                    child: CachedNetworkImage(
+                      width: 80,
+                      //height: 80,
+                      imageUrl: '${Constants.CND_IMAGE}/${movie.poster_url}',
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) => const ShimmerImage(),
+                      errorWidget: (context, url, error) => Icon(
+                        Icons.error,
+                      ),
+                    ),
+                  ),
+                  title: Text(
+                    '${movie.name}',
+                    style: TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
+                  subtitle: Text(movie.episode_current ?? ''),
+                );
+              },
+              onSelected: (movie) => Get.to(
+                () => MovieDetailScreen(slug: movie.slug!),
+              ),
+            ),
+      elevation: 0,
+      backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+      actions: [
+        IconButton(
+          onPressed: () {
+            setState(() {
+              _isSearching = !_isSearching;
+              // if (!_isSearching) {
+              //   _searchController.clear();
+              // }
+            });
+          },
+          icon: Icon(
+            _isSearching ? Icons.close : Icons.search,
+          ),
+        ),
+      ],
     );
   }
 

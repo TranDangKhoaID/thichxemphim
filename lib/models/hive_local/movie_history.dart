@@ -1,9 +1,9 @@
 import 'package:hive/hive.dart';
 
-part 'movie_favorite.g.dart';
+part 'movie_history.g.dart';
 
-@HiveType(typeId: 0)
-class MovieFavorite {
+@HiveType(typeId: 1)
+class MovieHistory {
   @HiveField(0)
   final String? name;
 
@@ -13,9 +13,13 @@ class MovieFavorite {
   @HiveField(2)
   final String? poster_url;
 
-  MovieFavorite({
+  @HiveField(3)
+  final int? indexSelected;
+
+  MovieHistory({
     this.name,
     this.slug,
     this.poster_url,
+    this.indexSelected,
   });
 }
