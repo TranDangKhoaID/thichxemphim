@@ -77,14 +77,21 @@ class _EpisodeNumberWidgetState extends State<EpisodeNumberWidget> {
                     ? ShareColors.kPrimaryColor
                     : Colors.grey,
               ),
-              child: Text(
-                (widget.items[index]!.name ?? '')
-                    .replaceFirst('Tập', '')
-                    .trim(),
-                style: TextStyle(
-                  color: indexSelected == index ? Colors.white : Colors.black,
-                ),
-              ),
+              child: indexSelected == index
+                  ? Text(
+                      'CC',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    )
+                  : Text(
+                      (widget.items[index]!.name ?? '')
+                          .replaceFirst('Tập', '')
+                          .trim(),
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
             ),
           ),
         ),

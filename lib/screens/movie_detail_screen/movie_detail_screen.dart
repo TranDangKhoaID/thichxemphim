@@ -63,7 +63,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
     }
   }
 
-  Future<bool?> toggleFavorite({required bool isExist}) async {
+  Future<bool?> toggleFavorite({required bool isFavorite}) async {
     //
     final movie = MovieFavorite(
       name: _controller.movie.value!.name,
@@ -72,14 +72,14 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
       indexSelected: indexSelected,
     );
 
-    if (isExist) {
+    if (isFavorite) {
       await boxFavorites.delete('key${widget.slug}');
     } else {
       await boxFavorites.put('key${widget.slug}', movie);
     }
 
     // Trả về giá trị boolean mới
-    return !isExist;
+    return !isFavorite;
   }
 
   void playNewVideo(FlickManager flickManager, String url) {
@@ -93,19 +93,20 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
   }
 
   @override
-  FutureOr<void> afterFirstLayout(BuildContext context) async {
+  Future<void> afterFirstLayout(BuildContext context) async {
     if (widget.indexSelected != null) {
       indexSelected = widget.indexSelected!;
     }
-    await _controller.getMovieDetail(slug: widget.slug);
-    _videoURL = await _controller.episodes.value[0]?.link_m3u8 ?? '';
-    flickManager = FlickManager(
-      autoPlay: true,
-      autoInitialize: true,
-      videoPlayerController: VideoPlayerController.networkUrl(
-        Uri.parse(_videoURL),
-      ),
-    );
+    await _controller.getMovieDetail(slug: widget.slug).then((_) async {
+      _videoURL = _controller.episodes.value[indexSelected]!.link_m3u8!;
+      flickManager = FlickManager(
+        autoPlay: true,
+        autoInitialize: true,
+        videoPlayerController: VideoPlayerController.networkUrl(
+          Uri.parse(_videoURL),
+        ),
+      );
+    });
     splitContent();
   }
 
@@ -118,14 +119,14 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
-    final isExist = boxFavorites.get('key${widget.slug}') != null;
+    final isFavorite = boxFavorites.get('key${widget.slug}') != null;
     return Scaffold(
       //appBar: AppBar(),
-      body: _buildBody(height, context, isExist),
+      body: _buildBody(height, context, isFavorite),
     );
   }
 
-  Widget _buildBody(double height, BuildContext context, bool isExist) {
+  Widget _buildBody(double height, BuildContext context, bool isFavorite) {
     return SafeArea(
       child: Obx(
         () {
@@ -201,10 +202,10 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
                               ),
                               SizedBox(width: 10),
                               LikeButton(
-                                isLiked: isExist,
+                                isLiked: isFavorite,
                                 size: 30,
-                                onTap: (isExist) => toggleFavorite(
-                                  isExist: isExist,
+                                onTap: (isFavorite) => toggleFavorite(
+                                  isFavorite: isFavorite,
                                 ),
                                 likeBuilder: (bool isLiked) {
                                   return Icon(
@@ -225,7 +226,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
                             : _buildEpisode(
                                 _controller.episodes.value,
                                 flickManager,
-                                isExist,
+                                isFavorite,
                               ),
                         SizedBox(height: 10),
                         TitleAndContent(
@@ -294,7 +295,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
   Widget _buildEpisode(
     List<Episode?> items,
     FlickManager flickManager,
-    bool isExist,
+    bool isFavorite,
   ) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -331,7 +332,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
                   items[index]!.link_m3u8 ?? '',
                 );
               }
-              if (isExist) {
+              if (isFavorite) {
                 final movie = MovieFavorite(
                   name: _controller.movie.value!.name,
                   poster_url: _controller.movie.value!.poster_url,
@@ -349,12 +350,14 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
                     ? ShareColors.kPrimaryColor
                     : Colors.grey,
               ),
-              child: Text(
-                (items[index]!.name ?? '').replaceFirst('Tập', '').trim(),
-                style: TextStyle(
-                  color: indexSelected == index ? Colors.white : Colors.black,
-                ),
-              ),
+              child: indexSelected == index
+                  ? ProgressWidget()
+                  : Text(
+                      (items[index]!.name ?? '').replaceFirst('Tập', '').trim(),
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
             ),
           ),
         ),
