@@ -30,6 +30,17 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     return ValueListenableBuilder(
       valueListenable: boxFavorites.listenable(),
       builder: (context, box, _) {
+        if (boxFavorites.isEmpty) {
+          return Center(
+            child: Text(
+              'Bạn chưa lưu phim nào',
+              style: TextStyle(
+                fontStyle: FontStyle.italic,
+                color: Colors.grey,
+              ),
+            ),
+          );
+        }
         return Padding(
           padding: EdgeInsets.all(5),
           child: GridView.builder(

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:thichxemphim/boxes.dart';
 
 import 'package:thichxemphim/common/share_color.dart';
+import 'package:thichxemphim/screens/movies_history_screen/movies_history_screen.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
@@ -22,7 +25,7 @@ class _SettingScreenState extends State<SettingScreen> {
       body: Column(
         children: [
           InkWell(
-            onTap: () {},
+            onTap: () => Get.to(() => MoviesHistoryScreen()),
             child: Container(
               alignment: Alignment.centerLeft,
               padding: const EdgeInsets.all(10),
@@ -43,7 +46,7 @@ class _SettingScreenState extends State<SettingScreen> {
             ),
           ),
           InkWell(
-            onTap: () {},
+            onTap: () => boxHistories.clear(),
             child: Container(
               alignment: Alignment.centerLeft,
               padding: const EdgeInsets.all(10),

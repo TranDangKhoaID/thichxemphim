@@ -10,6 +10,7 @@ import 'package:thichxemphim/boxes.dart';
 import 'package:thichxemphim/common/share_color.dart';
 import 'package:thichxemphim/models/episode.dart';
 import 'package:thichxemphim/models/hive_local/movie_favorite.dart';
+import 'package:thichxemphim/models/hive_local/movie_history.dart';
 import 'package:thichxemphim/screens/movie_detail_screen/controller/movie_detail_controller.dart';
 import 'package:thichxemphim/screens/movie_detail_screen/widgets/content_actor.dart';
 import 'package:thichxemphim/screens/movie_detail_screen/widgets/content_category.dart';
@@ -47,7 +48,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
   List<String> beginningOfContent = [];
   String summaryContent = '';
   //
-
+  bool isExist = false;
   //
   void splitContent() {
     // làm chức năng chia nhỏ content để hiện 1 phần
@@ -94,9 +95,18 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
 
   @override
   Future<void> afterFirstLayout(BuildContext context) async {
-    if (widget.indexSelected != null) {
+    isExist = boxHistories.get('key${widget.slug}') != null;
+    //neu da luu
+    if (isExist) {
+      final MovieHistory movie = boxHistories.get('key${widget.slug}');
+      indexSelected = movie.indexSelected!;
+    }
+    //
+    if (widget.indexSelected != null && !isExist) {
       indexSelected = widget.indexSelected!;
     }
+
+    //
     await _controller.getMovieDetail(slug: widget.slug).then((_) async {
       _videoURL = _controller.episodes.value[indexSelected]!.link_m3u8!;
       flickManager = FlickManager(
@@ -120,6 +130,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final isFavorite = boxFavorites.get('key${widget.slug}') != null;
+
     return Scaffold(
       //appBar: AppBar(),
       body: _buildBody(height, context, isFavorite),
@@ -132,6 +143,17 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
         () {
           if (_controller.isLoading.value) {
             return LoadingWidget();
+          }
+          if (!isExist && !_controller.isLoading.value) {
+            final name = _controller.movie.value!.name;
+            final poster_url = _controller.movie.value!.poster_url;
+            final movie = MovieHistory(
+              name: name,
+              poster_url: poster_url,
+              slug: widget.slug,
+              indexSelected: indexSelected,
+            );
+            boxHistories.put('key${widget.slug}', movie);
           }
           return Column(
             //mainAxisAlignment: MainAxisAlignment.center,
@@ -332,6 +354,13 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
                   items[index]!.link_m3u8 ?? '',
                 );
               }
+              final movie = MovieHistory(
+                name: _controller.movie.value!.name,
+                poster_url: _controller.movie.value!.poster_url,
+                slug: widget.slug,
+                indexSelected: indexSelected,
+              );
+              await boxHistories.put('key${widget.slug}', movie);
               if (isFavorite) {
                 final movie = MovieFavorite(
                   name: _controller.movie.value!.name,
