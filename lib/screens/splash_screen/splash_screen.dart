@@ -23,9 +23,12 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> with AfterLayoutMixin {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
-        child: CircularProgressIndicator(),
+        child: Image.asset(
+          'assets/icons/logo.png',
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }
