@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:injectable/injectable.dart';
 import 'package:thichxemphim/locator.dart';
 import 'package:thichxemphim/models/movie.dart';
 import 'package:thichxemphim/repositories/data_repository.dart';
 
+@lazySingleton
 class HomeController extends GetxController {
   /// MARK: - Initials;
   final dataRepository = locator<DataRepository>();

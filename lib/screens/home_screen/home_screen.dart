@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get/get.dart';
 import 'package:thichxemphim/common/constants.dart';
+import 'package:thichxemphim/controller/network_controller.dart';
+import 'package:thichxemphim/locator.dart';
 import 'package:thichxemphim/models/movie.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:thichxemphim/screens/home_screen/controller/home_controller.dart';
@@ -24,7 +26,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> with AfterLayoutMixin {
   /// MARK: - Initials;
-  final _controller = Get.put(HomeController());
+  //final _controller = Get.put(HomeController());
+  final _controller = locator<HomeController>();
+  final _controllerConnect = Get.find<NetworkController>();
   @override
   FutureOr<void> afterFirstLayout(BuildContext context) {
     _controller
@@ -44,7 +48,19 @@ class _HomeScreenState extends State<HomeScreen> with AfterLayoutMixin {
     return Scaffold(
       key: _globalKey,
       appBar: _buildAppbar(context),
-      body: _buildBody(),
+      body: Obx(
+        () => _controllerConnect.isConnected.value
+            ? _buildBody()
+            : Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.wifi_off, size: 80),
+                    Text('Lỗi kết nối mạng!'),
+                  ],
+                ),
+              ),
+      ),
     );
   }
 
@@ -106,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> with AfterLayoutMixin {
               ),
             ),
       elevation: 0,
-      backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+      //backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       actions: [
         IconButton(
           onPressed: () {
@@ -209,7 +225,7 @@ class _HomeScreenState extends State<HomeScreen> with AfterLayoutMixin {
       }
       if (items.isEmpty) {
         return Center(
-          child: Text('Rỗng'),
+          child: Text('Lỗi kết nối'),
         );
       }
       return Column(
@@ -308,7 +324,7 @@ class _HomeScreenState extends State<HomeScreen> with AfterLayoutMixin {
     }
     if (items.isEmpty) {
       return Center(
-        child: Text('Rỗng'),
+        child: Text('Lỗi kết nối'),
       );
     }
     return Column(
@@ -345,41 +361,36 @@ class _HomeScreenState extends State<HomeScreen> with AfterLayoutMixin {
           itemBuilder: (context, index) {
             final movie = items[index];
             return GestureDetector(
-              onTap: () {
-                print(_controller.totalPages.value[1]);
-              },
-              child: GestureDetector(
-                onTap: () => Get.to(
-                  () => MovieDetailScreen(slug: movie.slug!),
-                ),
-                child: Container(
-                  padding: EdgeInsets.all(5),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: CachedNetworkImage(
-                          height: 160,
-                          imageUrl: 'https://phimimg.com/${movie.poster_url}',
-                          fit: BoxFit.cover,
-                          placeholder: (context, url) => const ShimmerImage(),
-                          errorWidget: (context, url, error) => Icon(
-                            Icons.error,
-                          ),
+              onTap: () => Get.to(
+                () => MovieDetailScreen(slug: movie.slug!),
+              ),
+              child: Container(
+                padding: EdgeInsets.all(5),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: CachedNetworkImage(
+                        height: 160,
+                        imageUrl: 'https://phimimg.com/${movie.poster_url}',
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) => const ShimmerImage(),
+                        errorWidget: (context, url, error) => Icon(
+                          Icons.error,
                         ),
                       ),
-                      Text(
-                        movie.name ?? '',
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w600,
-                        ),
+                    ),
+                    Text(
+                      movie.name ?? '',
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             );

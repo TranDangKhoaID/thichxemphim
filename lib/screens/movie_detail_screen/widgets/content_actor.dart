@@ -21,17 +21,13 @@ class ContentActor extends StatelessWidget {
           height: 5,
         ),
         Wrap(
-          spacing: 8.0,
-          runSpacing: 8.0,
-          alignment: WrapAlignment.center,
+          spacing: 5.0,
+          runSpacing: 5.0,
+          alignment: WrapAlignment.start,
           children: List.generate(
             items.length,
-            (index) => Container(
-              alignment: Alignment.center,
-              width: handleWidthActor(items, context),
-              child: Text(
-                items[index],
-              ),
+            (index) => Text(
+              '${items[index]}${index == items.length - 1 ? '' : ', '}',
             ),
           ),
         )

@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:like_button/like_button.dart';
 import 'package:thichxemphim/boxes.dart';
 import 'package:thichxemphim/common/share_color.dart';
+import 'package:thichxemphim/controller/network_controller.dart';
 import 'package:thichxemphim/models/episode.dart';
 import 'package:thichxemphim/models/hive_local/movie_favorite.dart';
 import 'package:thichxemphim/models/hive_local/movie_history.dart';
@@ -36,7 +37,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
     with AfterLayoutMixin {
   ///
   final _controller = Get.put(MovieDetailController());
-
+  final _controllerConnect = Get.find<NetworkController>();
   //
   late FlickManager flickManager;
   late String _videoURL;
@@ -133,7 +134,19 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
 
     return Scaffold(
       //appBar: AppBar(),
-      body: _buildBody(height, context, isFavorite),
+      body: Obx(
+        () => _controllerConnect.isConnected.value
+            ? _buildBody(height, context, isFavorite)
+            : Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.wifi_off, size: 80),
+                    Text('Lỗi kết nối mạng!'),
+                  ],
+                ),
+              ),
+      ),
     );
   }
 
@@ -180,13 +193,13 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
                     ),
                   ),
                   Positioned(
-                    left: 20,
-                    top: 20,
-                    child: GestureDetector(
-                      onTap: () {
+                    // left: 20,
+                    // top: 20,
+                    child: IconButton(
+                      onPressed: () {
                         Navigator.pop(context);
                       },
-                      child: Icon(
+                      icon: Icon(
                         Icons.arrow_back_ios,
                         color: ShareColors.kPrimaryColor,
                       ),

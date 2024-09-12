@@ -24,8 +24,11 @@ class _SplashScreenState extends State<SplashScreen> with AfterLayoutMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
+      body: Container(
+        alignment: Alignment.center,
         child: Image.asset(
+          width: 100,
+          height: 100,
           'assets/icons/logo.png',
           fit: BoxFit.cover,
         ),
